@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 /// 创建人： Created by zhaolong
@@ -17,25 +16,28 @@ class RoteFlowButtonMenu extends StatefulWidget {
   final List<Widget> iconList;
 
   ///菜单图标背景
-  final List<Color> ?iconBackgroundColorList;
+  final List<Color>? iconBackgroundColorList;
 
   ///所有菜单项默认使用的底色
   final Color defaultBackgroundColor;
 
   ///点击事件回调
-  final Function(int index) ?clickCallBack;
+  final Function(int index)? clickCallBack;
 
   ///是否输出Log
   final bool isLog;
 
-  RoteFlowButtonMenu(
-      {required this.iconList,
+  const RoteFlowButtonMenu(
+      {Key? key,
+      required this.iconList,
       this.clickCallBack,
       this.isLog = false,
       this.defaultBackgroundColor = Colors.deepOrange,
-      this.iconBackgroundColorList});
+      this.iconBackgroundColorList})
+      : super(key: key);
 
   @override
+  // ignore: library_private_types_in_public_api
   _MenuState createState() => _MenuState();
 }
 
@@ -64,28 +66,28 @@ class _MenuState extends State<RoteFlowButtonMenu>
 
     ///创建动画控制器
     ///执行时间为200毫秒
-    _controller =
-        AnimationController(duration: Duration(milliseconds: 400), vsync: this)
+    _controller = AnimationController(
+        duration: const Duration(milliseconds: 400), vsync: this)
 
-          ///设置监听，每当动画执行时就会实时回调此方法
-          ..addListener(() {
-            setState(() {
-              ///从0到1
-              _rad = animation.value;
-              print("$_rad ");
-            });
-          })
+      ///设置监听，每当动画执行时就会实时回调此方法
+      ..addListener(() {
+        setState(() {
+          ///从0到1
+          _rad = animation.value;
+          // print("$_rad ");
+        });
+      })
 
-          ///设置状态监听
-          ..addStatusListener((status) {
-            if (status == AnimationStatus.completed) {
-              print("正向执行完毕 ");
-              _closed = !_closed;
-            } else if (status == AnimationStatus.dismissed) {
-              print("反向执行完毕 ");
-              _closed = !_closed;
-            }
-          });
+      ///设置状态监听
+      ..addStatusListener((status) {
+        if (status == AnimationStatus.completed) {
+          // print("正向执行完毕 ");
+          _closed = !_closed;
+        } else if (status == AnimationStatus.dismissed) {
+          // print("反向执行完毕 ");
+          _closed = !_closed;
+        }
+      });
 
     ///变化值从 0.0-1.0
     ///Curves.easeInOutExpo 中间快两头慢
@@ -134,11 +136,11 @@ class _MenuState extends State<RoteFlowButtonMenu>
 
           ///点击菜单其他的操作
         },
-        child: new Container(
+        child: Container(
           ///圆形背景
           decoration: BoxDecoration(
               color: itemColor,
-              borderRadius: BorderRadius.all(Radius.circular(23))),
+              borderRadius: const BorderRadius.all(Radius.circular(23))),
           alignment: Alignment.center,
           height: 44,
           width: 44,
@@ -238,8 +240,7 @@ class RoteFlowButtonMenuDelegate extends FlowDelegate {
       y = normalHeight - dxflag * (i + 1) * 0.9;
 
       ///在Flow中进行绘制
-      context.paintChild(i,
-          transform: new Matrix4.translationValues(x, y, 0.0));
+      context.paintChild(i, transform: Matrix4.translationValues(x, y, 0.0));
     }
 
     ///最后一个做为菜单选项
@@ -274,18 +275,5 @@ class RoteFlowButtonMenuDelegate extends FlowDelegate {
   @override
   bool shouldRelayout(FlowDelegate oldDelegate) {
     return true;
-  }
-
-  //设置Flow的尺寸
-  @override
-  Size getSize(BoxConstraints constraints) {
-    //指定Flow的大小
-    return super.getSize(constraints);
-  }
-
-  //  设置每个child的布局约束条件
-  @override
-  BoxConstraints getConstraintsForChild(int i, BoxConstraints constraints) {
-    return super.getConstraintsForChild(i, constraints);
   }
 }

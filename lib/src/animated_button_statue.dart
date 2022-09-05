@@ -1,5 +1,5 @@
-
 import 'package:flutter/material.dart';
+
 /// 可关注公众号：我的大前端生涯   获取最新技术分享
 /// 可关注网易云课堂：https://study.163.com/instructor/1021406098.htm
 /// 可关注博客：https://blog.csdn.net/zl18603543572
@@ -13,39 +13,49 @@ class AnimatedStatusButton extends StatefulWidget {
   final double width;
 
   ///按钮控制器
-  final AnimatedStatusController ?animatedStatusController;
+  final AnimatedStatusController? animatedStatusController;
+
   ///按钮上的文字
   final String buttonText;
+
   ///按下时的背景颜色
   final Color backgroundSelectColor;
 
   ///默认时显示的颜色
   final Color borderNormalColor;
   final Color backgroundNormalColor;
+
   ///按下的背景高亮颜色
   final Color backgroundHightColor;
+
   ///按下的文字的高亮颜色
   final Color textHightCcolor;
+
   ///默认普通状态下的文字颜色
   final Color textNormalCcolor;
+
   ///选中状态下的边框颜色
   final Color borderSelectColor;
+
   ///按钮点击事件回调
-  final Function ?clickCallback;
+  final Function? clickCallback;
+
   ///动画交互时间
   final int milliseconds;
+
   ///圆角大小
   final double borderRaidus;
+
   ///为true时 触发点击事件后 会更新状态为
   ///选择状态
-  final bool isUseSelect ;
+  final bool isUseSelect;
 
-  AnimatedStatusButton({
-    Key ?key,
+  const AnimatedStatusButton({
+    Key? key,
     this.height = 44.0,
     this.width = 200.0,
     this.borderRaidus = 22.0,
-    this.buttonText='',
+    this.buttonText = '',
     this.textNormalCcolor = Colors.white,
     this.borderNormalColor = Colors.deepOrange,
     this.backgroundNormalColor = Colors.deepOrange,
@@ -57,9 +67,10 @@ class AnimatedStatusButton extends StatefulWidget {
     this.isUseSelect = true,
     this.animatedStatusController,
     this.clickCallback,
-  }):super(key:key);
+  }) : super(key: key);
 
   @override
+  // ignore: library_private_types_in_public_api
   _AnimatedButtonState createState() => _AnimatedButtonState();
 }
 
@@ -68,10 +79,10 @@ class _AnimatedButtonState extends State<AnimatedStatusButton>
     with TickerProviderStateMixin {
   ///属性配制值转接
   ///按钮上的文本的颜色
-  Color ?textColor;
+  Color? textColor;
 
   ///按钮背景的颜色
-  Color ?containerColor;
+  Color? containerColor;
 
   ///按钮背景边框的颜色
   Color? borderColor;
@@ -88,10 +99,12 @@ class _AnimatedButtonState extends State<AnimatedStatusButton>
   double minWidth = 0.0;
 
   bool isSelect = false;
+
   ///动画过渡时间
-  int ?milliseconds;
+  int? milliseconds;
+
   ///小圆圈使用到的透明度过渡
-  double ?opacity;
+  double? opacity;
 
   ///配置默认的样式
   @override
@@ -113,21 +126,23 @@ class _AnimatedButtonState extends State<AnimatedStatusButton>
           isSelect = true;
           controlSelect();
         }
-        setState(() {
-
-        });
+        setState(() {});
       });
     }
   }
+
   ///5.8lib/demo/animated_button_statue.dart
   ///按下的高亮
   void controlHight() {
     ///动画过渡时间
-    milliseconds = widget.milliseconds~/6;
+    milliseconds = widget.milliseconds ~/ 6;
+
     ///背景
     containerColor = widget.backgroundHightColor;
+
     ///文字
-    textColor =widget.textHightCcolor;
+    textColor = widget.textHightCcolor;
+
     ///边框
     borderColor = containerColor;
   }
@@ -136,20 +151,28 @@ class _AnimatedButtonState extends State<AnimatedStatusButton>
   void controlNormal() {
     ///动画过渡时间
     milliseconds = widget.milliseconds;
+
     ///小圆圈的透明度
     opacity = 0.0;
+
     ///文字的默认颜色
     textColor = widget.textNormalCcolor;
+
     ///背景的默认颜色
     containerColor = widget.backgroundNormalColor;
+
     ///边框的默认颜色
     borderColor = widget.borderNormalColor;
+
     ///高度没变化 默认的高度
     containerHeight = widget.height;
+
     ///小圆角显示为正圆 所以宽与高一至
     minWidth = widget.height;
+
     ///显示圆角边框时圆角大小
     borderRaidus = widget.borderRaidus;
+
     ///按钮默认的宽度
     containerWidth = widget.width;
   }
@@ -158,21 +181,28 @@ class _AnimatedButtonState extends State<AnimatedStatusButton>
   void controlSelect() {
     ///延时修改小圆圈的透明度
     ///以达到延时显示小圆圈的效果
-    Future.delayed(Duration(milliseconds: (milliseconds??1 * 0.6).toInt()), () {
+    Future.delayed(Duration(milliseconds: (milliseconds ?? 1 * 0.6).toInt()),
+        () {
       setState(() {
         opacity = 1.0;
       });
     });
+
     ///选中的边框颜色
     borderColor = widget.borderSelectColor;
+
     ///选中状态下文字为透明
     textColor = Colors.transparent;
+
     ///选中的背景颜色
     containerColor = widget.backgroundSelectColor;
+
     ///高度没变化
     containerHeight = widget.height;
+
     ///边框的大小与小圆圈的大小一至
     containerWidth = minWidth;
+
     ///显示小圆圈时圆角半径为圆圈的半径
     borderRaidus = minWidth / 2;
   }
@@ -183,29 +213,35 @@ class _AnimatedButtonState extends State<AnimatedStatusButton>
     return Material(
       ///手势事件监听
       child: InkWell(
+
           ///手指抬起时的回调
           onTap: onClickTap,
+
           ///手指按下时的回调
           onTapDown: onClickDown,
+
           ///监听事件的区域圆角配置
-          borderRadius: BorderRadius.circular(borderRaidus??0),
+          borderRadius: BorderRadius.circular(borderRaidus ?? 0),
+
           ///按钮显示的内容主体
           child: buildContainer()),
     );
   }
+
   ///5.8lib/demo/animated_button_statue.dart
   ///按下的回调
   void onClickDown(TapDownDetails details) {
     ///按下时 显示高度样式
     ///只有非选中状态下才使用高亮样式
     ///如果是选中状态下 显示的是小圆圈不需要高亮
-    if(!isSelect){
+    if (!isSelect) {
       setState(() {
         ///切换高亮显示
         controlHight();
       });
     }
   }
+
   ///5.8lib/demo/animated_button_statue.dart
   ///点击事件处理
   ///只有[isSelect]为false非选中状态才会触发
@@ -218,6 +254,7 @@ class _AnimatedButtonState extends State<AnimatedStatusButton>
         ///更新状态
         isSelect = !isSelect;
         controlSelect();
+
         ///同时触发回调
         if (widget.clickCallback != null) {
           bool isClose = await widget.clickCallback!();
@@ -246,29 +283,32 @@ class _AnimatedButtonState extends State<AnimatedStatusButton>
     return AnimatedContainer(
       height: containerHeight,
       width: containerWidth,
+
       ///过渡时间
-      duration: Duration(milliseconds: milliseconds??200),
+      duration: Duration(milliseconds: milliseconds ?? 200),
+
       ///背景样式
       decoration: BoxDecoration(
         ///圆角
-        borderRadius: BorderRadius.circular(borderRaidus??0),
+        borderRadius: BorderRadius.circular(borderRaidus ?? 0),
+
         ///边框
-        border: Border.all(color: borderColor??Colors.transparent, width: 2.0),
+        border:
+            Border.all(color: borderColor ?? Colors.transparent, width: 2.0),
+
         ///背景颜色
         color: containerColor,
       ),
 
-      child: Container(
-        ///层叠布局
-        child: Stack(
-          alignment: Alignment.center,
-          children: <Widget>[
-            ///文本容器
-            buildTextWidget(),
-            ///进度小圆圈
-            buildProgressWidget(),
-          ],
-        ),
+      child: Stack(
+        alignment: Alignment.center,
+        children: <Widget>[
+          ///文本容器
+          buildTextWidget(),
+
+          ///进度小圆圈
+          buildProgressWidget(),
+        ],
       ),
     );
   }
@@ -278,15 +318,16 @@ class _AnimatedButtonState extends State<AnimatedStatusButton>
   Widget buildTextWidget() {
     ///文本动画样式
     return AnimatedDefaultTextStyle(
-      child: Text(widget.buttonText),
-      duration: Duration(milliseconds: milliseconds??100 ~/ 3),
+      duration: Duration(milliseconds: milliseconds ?? 100 ~/ 3),
       style: TextStyle(
         color: textColor,
         fontWeight: FontWeight.bold,
       ),
       curve: Curves.linear,
+      child: Text(widget.buttonText),
     );
   }
+
   ///5.8lib/demo/animated_button_statue.dart
   ///构建进度小圆圈
   buildProgressWidget() {
@@ -294,16 +335,18 @@ class _AnimatedButtonState extends State<AnimatedStatusButton>
       ///透明度动画过渡
       child: AnimatedOpacity(
         ///透明度
-        opacity: opacity??1.0,
+        opacity: opacity ?? 1.0,
+
         ///时间
-        duration:
-            Duration(milliseconds: (milliseconds ??1*0.2).toInt()),
+        duration: Duration(milliseconds: (milliseconds ?? 1 * 0.2).toInt()),
         child: Padding(
             padding: EdgeInsets.all(minWidth / 8),
+
             ///小圆圈
-            child: CircularProgressIndicator(
+            child: const CircularProgressIndicator(
               ///小圆圈的背景颜色
               backgroundColor: Colors.white,
+
               ///小圆圈的前景颜色
               valueColor: AlwaysStoppedAnimation(Colors.blue),
             )),
@@ -318,7 +361,7 @@ typedef AnimatedStatusButtonListener = void Function(bool isClose);
 
 ///控制器
 class AnimatedStatusController {
-  AnimatedStatusButtonListener ?_animatedStatusButtonListener;
+  AnimatedStatusButtonListener? _animatedStatusButtonListener;
 
   ///控制器中添加监听
   setStatusListener(AnimatedStatusButtonListener listener) {

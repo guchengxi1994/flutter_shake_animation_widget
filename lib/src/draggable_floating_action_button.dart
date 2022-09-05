@@ -1,19 +1,20 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 //静态路由配置///代码清单2-27-1 可托动的悬浮按钮
 ///代码路径 lib/code2/draggable_floating_action_button.dart
+// ignore: must_be_immutable
 class DraggableFloatingActionButton extends StatefulWidget {
   final Widget child;
   final Offset initialOffset;
   final VoidCallback onPressed;
   GlobalKey<State<StatefulWidget>> parentKey;
   DraggableFloatingActionButton({
+    Key? key,
     required this.child,
     required this.initialOffset,
     required this.onPressed,
     required this.parentKey,
-  });
+  }) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _DraggableFloatingActionButtonState();
@@ -34,8 +35,9 @@ class _DraggableFloatingActionButtonState
     //托动按钮的初始位置
     _offset = widget.initialOffset;
     //添加视图监听
-    WidgetsBinding.instance?.addPostFrameCallback(_initBoundary);
+    WidgetsBinding.instance.addPostFrameCallback(_initBoundary);
   }
+
   //页面第一帧绘制完成后调用
   void _initBoundary(_) {
     //获取获取组件的 RenderBox
@@ -55,9 +57,10 @@ class _DraggableFloatingActionButtonState
             parentSize.width - size.width, parentSize.height - size.height);
       });
     } catch (e) {
-      print('catch: $e');
+      debugPrint('catch: $e');
     }
   }
+
   ///代码清单2-27-3 计算按钮位置
   void _updatePosition(PointerMoveEvent pointerMoveEvent) {
     double newOffsetX = _offset.dx + pointerMoveEvent.delta.dx;
@@ -79,6 +82,7 @@ class _DraggableFloatingActionButtonState
       _offset = Offset(newOffsetX, newOffsetY);
     });
   }
+
   ///代码清单2-27-2 可托动的悬浮按钮
   @override
   Widget build(BuildContext context) {
@@ -94,7 +98,7 @@ class _DraggableFloatingActionButtonState
           });
         },
         onPointerUp: (PointerUpEvent pointerUpEvent) {
-          print('onPointerUp');
+          // print('onPointerUp');
           if (_isDragging) {
             setState(() {
               _isDragging = false;

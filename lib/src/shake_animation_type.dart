@@ -1,5 +1,4 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
+// ignore_for_file: constant_identifier_names
 
 /**
  * 创建人： Created by zhaolong

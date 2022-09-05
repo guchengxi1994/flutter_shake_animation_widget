@@ -1,4 +1,5 @@
-import 'package:flutter/cupertino.dart';
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:shake_animation_widget/shake_animation_widget.dart';
 
@@ -11,7 +12,7 @@ import 'package:shake_animation_widget/shake_animation_widget.dart';
 ///
 ///
 main() {
-  runApp(MaterialApp(
+  runApp(const MaterialApp(
     home: Exam222HomePage(),
   ));
 }
@@ -28,9 +29,9 @@ class Exam222HomePage extends StatefulWidget {
 class _Exam220HomePageState extends State<Exam222HomePage> {
   //定义菜单按钮选项
   List<Icon> iconList = [
-    Icon(Icons.add),
-    Icon(Icons.save),
-    Icon(Icons.share),
+    const Icon(Icons.add),
+    const Icon(Icons.save),
+    const Icon(Icons.share),
   ];
 
   @override
@@ -38,48 +39,46 @@ class _Exam220HomePageState extends State<Exam222HomePage> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: Text("抖动动画"),
+          title: const Text("抖动动画"),
         ),
         backgroundColor: Colors.white,
 
         ///填充布局
-        body: Container(
+        body: SizedBox(
             width: double.infinity,
             height: double.infinity,
             child: Stack(
               children: [
                 Column(
                   children: [
-                    SizedBox(height: 40),
+                    const SizedBox(height: 40),
 
                     ///通用组件的抖动
                     buildShakeAnimationWidget(),
-                    SizedBox(height: 100),
+                    const SizedBox(height: 100),
 
                     ///文字的抖动
                     buildTextAnimationWidget(),
-                    SizedBox(height: 140),
+                    const SizedBox(height: 140),
                     buildAnimatedStatusButton(),
-                    SizedBox(height: 140),
+                    const SizedBox(height: 140),
                     ElevatedButton(
                         onPressed: () {
-                          Navigator.of(context).push(new MaterialPageRoute(
+                          Navigator.of(context).push(MaterialPageRoute(
                               builder: (BuildContext context) {
-                            return Example309();
+                            return const Example309();
                           }));
                         },
-                        child: Text("开源中图底部菜单")),
+                        child: const Text("开源中图底部菜单")),
 
-          ElevatedButton(
-              onPressed: () {
-                Navigator.of(context).push(new MaterialPageRoute(
-                    builder: (BuildContext context) {
-                      return Exam223HomePage();
-                    }));
-              },
-              child: Text("可托动的悬浮按钮")),
-
-
+                    ElevatedButton(
+                        onPressed: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (BuildContext context) {
+                            return const Exam223HomePage();
+                          }));
+                        },
+                        child: const Text("可托动的悬浮按钮")),
                   ],
                 ),
                 //向上弹出的按钮组件
@@ -110,7 +109,7 @@ class _Exam220HomePageState extends State<Exam222HomePage> {
 
   ///代码清单2-25-2 抖动的文本
   buildTextAnimationWidget() {
-    return ShakeTextAnimationWidget(
+    return const ShakeTextAnimationWidget(
       //需要设置抖动效果的文本
       animationString: "这里是文字的抖动",
       space: 1.0,
@@ -118,7 +117,7 @@ class _Exam220HomePageState extends State<Exam222HomePage> {
       runSpace: 10,
       //行间距
       //文字的样式
-      textStyle: const TextStyle(
+      textStyle: TextStyle(
         ///文字的大小
         fontSize: 25,
       ),
@@ -146,7 +145,7 @@ class _Exam220HomePageState extends State<Exam222HomePage> {
       //抖动的幅度 取值范围为[0,1]
       shakeRange: 0.2,
       //执行抖动动画的子Widget
-      child: RaisedButton(
+      child: ElevatedButton(
         child: const Text(
           '测试',
           style: TextStyle(color: Colors.white),
@@ -206,7 +205,7 @@ class _Exam220HomePageState extends State<Exam222HomePage> {
       clickCallback: () async {
         print("点击事件回调");
         //模拟耗时操作
-        await Future.delayed(Duration(milliseconds: 4000));
+        await Future.delayed(const Duration(milliseconds: 4000));
         //返回false 会一直在转圈圈
         //返回true 会回到默认显示样式
         return Future.value(false);
@@ -217,6 +216,8 @@ class _Exam220HomePageState extends State<Exam222HomePage> {
 
 //防开源中国自定义底部菜单
 class Example309 extends StatefulWidget {
+  const Example309({Key? key}) : super(key: key);
+
   @override
   State<StatefulWidget> createState() {
     return _ExampleState();
@@ -227,36 +228,29 @@ class Example309 extends StatefulWidget {
 class _ExampleState extends State<Example309> {
   ///构建菜单所使用到的图标
   List<Icon> iconList = [
-    Icon(Icons.android, color: Colors.blue, size: 18),
-    Icon(Icons.image, color: Colors.red, size: 18),
-    Icon(Icons.find_in_page, color: Colors.orange, size: 18),
-    Icon(Icons.add, color: Colors.lightGreenAccent, size: 28),
+    const Icon(Icons.android, color: Colors.blue, size: 18),
+    const Icon(Icons.image, color: Colors.red, size: 18),
+    const Icon(Icons.find_in_page, color: Colors.orange, size: 18),
+    const Icon(Icons.add, color: Colors.lightGreenAccent, size: 28),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[200],
-      body: Container(
-        //文字标签流式布局
-        child: BottomRoundFlowMenu(
-          //图标使用的背景
-          defaultBackgroundColor: Colors.white,
-          //菜单所有的图标
-          iconList: iconList,
-          //对应菜单项点击事件回调
-          clickCallBack: (int index) {
-            print("点击了 $index");
-          },
-        ),
+      body: BottomRoundFlowMenu(
+        //图标使用的背景
+        defaultBackgroundColor: Colors.white,
+        //菜单所有的图标
+        iconList: iconList,
+        //对应菜单项点击事件回调
+        clickCallBack: (int index) {
+          print("点击了 $index");
+        },
       ),
     );
   }
 }
-
-
-
-
 
 class Exam223HomePage extends StatefulWidget {
   const Exam223HomePage({Key? key}) : super(key: key);
@@ -281,7 +275,6 @@ class _Exam223HomePageState extends State<Exam223HomePage> {
           key: _parentKey,
           children: [
             Container(color: Colors.blueGrey),
-
             DraggableFloatingActionButton(
               child: Container(
                 width: 60,

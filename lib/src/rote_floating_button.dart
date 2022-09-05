@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
 
 /// 创建人： Created by zhaolong
 /// 创建时间：Created by  on 2020/11/7.
@@ -18,10 +16,15 @@ class RoteFloatingButton extends StatefulWidget {
   //按钮的点击事件
   final Function(int index)? clickCallback;
 
-  RoteFloatingButton(
-      {required this.iconList, this.clickCallback, this.iconSize = 48.0});
+  const RoteFloatingButton(
+      {Key? key,
+      required this.iconList,
+      this.clickCallback,
+      this.iconSize = 48.0})
+      : super(key: key);
 
   @override
+  // ignore: library_private_types_in_public_api
   _RoteButtonPageState createState() => _RoteButtonPageState();
 }
 
@@ -44,16 +47,16 @@ class _RoteButtonPageState extends State<RoteFloatingButton>
   late Animation<double> _translateButton;
 
   //动画执行速率
-  Curve _curve = Curves.easeOut;
+  final Curve _curve = Curves.easeOut;
 
-  double _fabHeight = 56.0;
+  final double _fabHeight = 56.0;
 
   @override
   initState() {
     super.initState();
     //初始化动画控制器
-    _animationController =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 300));
+    _animationController = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 300));
     //添加动画监听
     _animationController.addListener(() {
       setState(() {});
@@ -130,7 +133,7 @@ class _RoteButtonPageState extends State<RoteFloatingButton>
 
   //构建固定旋转菜单按钮
   Widget floatButton() {
-    return new Container(
+    return SizedBox(
       width: widget.iconSize,
       height: widget.iconSize,
       child: FloatingActionButton(

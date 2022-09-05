@@ -19,10 +19,12 @@ class ShakeAnimationBuilder extends StatelessWidget {
   ///[child] 执行动画的组件
   ///[animation] 执行的动画
   ShakeAnimationBuilder(
-      {required this.child,
+      {Key? key,
+      required this.child,
       required this.animation,
       this.randomValue = 5,
-      this.shakeAnimationType = ShakeAnimationType.RoateShake});
+      this.shakeAnimationType = ShakeAnimationType.RoateShake})
+      : super(key: key);
 
   ///执行动画的子Widget
   final Widget child;
@@ -46,7 +48,8 @@ class ShakeAnimationBuilder extends StatelessWidget {
     return AnimatedBuilder(
       animation: animation,
       builder: (BuildContext context, Widget? child) {
-        return new Transform(
+        return Transform(
+
             ///构建Matrix4
             transform: buildMatrix4(),
 
@@ -81,7 +84,7 @@ class ShakeAnimationBuilder extends StatelessWidget {
         dy = animation.value * 15;
       }
 
-      print("dx $dx dy $dy");
+      // print("dx $dx dy $dy");
 
       ///在XOY平面的平移
       return Matrix4.translationValues(dx, dy, 0);

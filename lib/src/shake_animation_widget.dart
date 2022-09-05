@@ -24,25 +24,27 @@ class ShakeAnimationWidget extends StatefulWidget {
   final ShakeAnimationType shakeAnimationType;
 
   ///抖动次数 0 为无限抖动
-  final shakeCount;
+  final int shakeCount;
 
   ///随机动画时抖动的波动范围
   final double randomValue;
 
   ///抖动动画控制器
-  final ShakeAnimationController ?shakeAnimationController;
+  final ShakeAnimationController? shakeAnimationController;
 
   ///是否自动执行抖动
   final bool isForward;
 
-  ShakeAnimationWidget(
-      {required this.child,
+  const ShakeAnimationWidget(
+      {Key? key,
+      required this.child,
       this.shakeRange = 0.1,
       this.shakeCount = 0,
       this.shakeAnimationType = ShakeAnimationType.RoateShake,
       this.shakeAnimationController,
       this.isForward = true,
-      this.randomValue = 4});
+      this.randomValue = 4})
+      : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -53,10 +55,10 @@ class ShakeAnimationWidget extends StatefulWidget {
 class _ShakeAnimationState extends State<ShakeAnimationWidget>
     with SingleTickerProviderStateMixin {
   ///动画控制器
- late AnimationController _animationController;
+  late AnimationController _animationController;
 
   ///旋转弧度动画
- late Animation<double> _angleAnimation;
+  late Animation<double> _angleAnimation;
 
   ///抖动执行次数
   int _shakeTotalCount = 0;
@@ -65,7 +67,7 @@ class _ShakeAnimationState extends State<ShakeAnimationWidget>
   int _shakeCurrentCount = 0;
 
   ///抖动的范围配置
- late double _shakeRange;
+  late double _shakeRange;
 
   /// lib/demo/shake/shake_animation_widget.dart
   @override
@@ -123,7 +125,6 @@ class _ShakeAnimationState extends State<ShakeAnimationWidget>
   /// lib/demo/shake/shake_animation_widget.dart
   ///抖动动画控制器监听
   void shakeListener(isOpen, shakeCount) {
-
     _shakeCurrentCount = 0;
 
     if (isOpen) {
@@ -173,7 +174,7 @@ class _ShakeAnimationState extends State<ShakeAnimationWidget>
   void dispose() {
     ///销毁
     _animationController.dispose();
-    if(widget.shakeAnimationController!=null){
+    if (widget.shakeAnimationController != null) {
       ///移动监听
       widget.shakeAnimationController!.removeListener();
     }
@@ -185,13 +186,13 @@ class _ShakeAnimationState extends State<ShakeAnimationWidget>
   Widget build(BuildContext context) {
     return ShakeAnimationBuilder(
       //执行动画的Widget
-      child: widget.child,
-      //动画曲线
       animation: _angleAnimation,
       //动画类型
       shakeAnimationType: widget.shakeAnimationType,
       //随机动画时抖动的波动范围
       randomValue: widget.randomValue,
+      //执行动画的Widget
+      child: widget.child,
     );
   }
 }

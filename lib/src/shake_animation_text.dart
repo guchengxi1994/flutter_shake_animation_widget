@@ -17,7 +17,7 @@ class ShakeTextAnimationWidget extends StatefulWidget {
   final String animationString;
 
   ///文本样式
-  final TextStyle ?textStyle;
+  final TextStyle? textStyle;
 
   ///文字之间的间距
   final double space;
@@ -26,15 +26,18 @@ class ShakeTextAnimationWidget extends StatefulWidget {
   final double runSpace;
 
   ///抖动次数
-  final shakeCount;
-  ShakeTextAnimationWidget(
-      {required this.animationString,
+  final int shakeCount;
+  const ShakeTextAnimationWidget(
+      {Key? key,
+      required this.animationString,
       this.textStyle,
       this.space = 1,
       this.runSpace = 6,
-      this.shakeCount = 0});
+      this.shakeCount = 0})
+      : super(key: key);
 
   @override
+  // ignore: library_private_types_in_public_api
   _TextAnimationState createState() => _TextAnimationState();
 }
 
@@ -63,7 +66,7 @@ class _TextAnimationState extends State<ShakeTextAnimationWidget> {
         ///微旋转
         shakeAnimationType = ShakeAnimationType.RoateShake;
       }
-      if (itemStr.trim().length == 0) {
+      if (itemStr.trim().isEmpty) {
         ///如果当前截取的是空格 就不添加动画效果
         textWidgetList.add(
           Text(
@@ -76,16 +79,17 @@ class _TextAnimationState extends State<ShakeTextAnimationWidget> {
         ShakeAnimationWidget animationWidget = ShakeAnimationWidget(
           ///执行动画的子Widget
           ///这里只是一个字
-          child: Text(
-            itemStr,
-            style: widget.textStyle,
-          ),
-
-          ///抖动次数限制
           shakeCount: widget.shakeCount,
 
           ///抖动动画的类型
           shakeAnimationType: shakeAnimationType,
+
+          ///执行动画的子Widget
+          ///这里只是一个字
+          child: Text(
+            itemStr,
+            style: widget.textStyle,
+          ),
         );
         textWidgetList.add(animationWidget);
       }
